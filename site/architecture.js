@@ -24,6 +24,7 @@ function renderBlueprint(index) {
     expanded.src=`diagrams/${item.file}?v=5`; expanded.alt=item.caption;
     document.querySelector('#drawing-scale').value='fit';
     expanded.style.width='100%'; expanded.style.minWidth='0';
+    expanded.style.maxHeight='calc(94vh - 130px)'; expanded.style.objectFit='contain';
     drawingDialog.showModal();
   });
 }
@@ -36,5 +37,6 @@ document.querySelector('#close-drawing').addEventListener('click',()=>drawingDia
 document.querySelector('#drawing-scale').addEventListener('change',event=>{
   const image=document.querySelector('#expanded-drawing');
   image.style.width=event.target.value==='fit'?'100%':`${1600*Number(event.target.value)}px`;
+  image.style.maxHeight=event.target.value==='fit'?'calc(94vh - 130px)':'none';
 });
 renderBlueprint(0);
