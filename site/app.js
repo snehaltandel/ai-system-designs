@@ -60,3 +60,19 @@ designs.forEach((item, index) => {
   patterns.append(button);
 });
 render(1);
+
+// Reveal linked lessons and settle section anchors after the dynamic diagram loads.
+function revealLinkedTopic() {
+  const target = document.getElementById(window.location.hash.slice(1));
+  if (!target) return;
+  if (target.tagName === 'DETAILS') target.open = true;
+  target.scrollIntoView({ block: 'start', behavior: 'instant' });
+}
+window.addEventListener('hashchange', revealLinkedTopic);
+window.addEventListener('load', revealLinkedTopic);
+document.querySelectorAll('.guide-nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    const target = document.getElementById(link.hash.slice(1));
+    if (target) target.open = true;
+  });
+});

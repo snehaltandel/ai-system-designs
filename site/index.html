@@ -5,11 +5,11 @@
   <title>AI System Designs — A business field guide</title>
   <meta name="description" content="Explore how business data connects to AI, where decisions happen, and which checks keep people in control.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=3">
-  <script src="app.js?v=2" defer></script>
+  <link rel="stylesheet" href="styles.css?v=4">
+  <script src="app.js?v=4" defer></script>
 </head>
 <body>
-<header><a class="brand" href="#">◎ <span>AI SYSTEM DESIGNS</span></a><nav aria-label="Sections"><a href="#operating-model">Operating model</a><a href="#llm-foundations">LLM math & reasoning ↗</a></nav></header>
+<header><a class="brand" href="#">◎ <span>AI SYSTEM DESIGNS</span></a><nav aria-label="Sections"><a href="#trusted-ai">Data & agent foundations</a><a href="#operating-model">Operating model</a><a href="#llm-foundations">LLM math & reasoning ↗</a></nav></header>
 <main>
   <section class="intro"><p class="eyebrow">A FIELD GUIDE FOR BUSINESS LEADERS</p><h1>See the system.<br><span>Make a better decision.</span></h1><p>AI works inside a business process. Explore how sources become context, how answers become decisions, and where people stay in control.</p></section>
   <section aria-labelledby="explore-title" class="explorer">
@@ -17,7 +17,93 @@
     <div id="patterns" class="patterns" aria-label="Architecture patterns"></div>
     <article id="design" aria-live="polite"></article>
   </section>
-  <section id="operating-model"><div class="section-heading"><h2>Run the business around the AI</h2><span>02 / CLOSE THE LOOP</span></div>
+    <section id="trusted-ai" aria-labelledby="trusted-title" class="trusted-guide">
+    <div class="section-heading"><h2 id="trusted-title">Build the foundations for trustworthy AI</h2><span>02 / FROM DATA TO VALUE</span></div>
+    <p class="foundation-intro">An agent works with the context and tools your system supplies. Give it reliable data, explicit business meaning, relevant memory, and a clear path to ask for help. Then measure whether the whole process improves the business.</p>
+    <figure class="foundation-map">
+      <figcaption><h3>One connected system, with checks throughout</h3><p>Follow the arrows. Controls sit before retrieval, during validation, and before an action—not only at the end.</p></figcaption>
+      <ol class="foundation-chain">
+        <li><strong>Owned sources</strong><span>Quality, access, freshness</span></li>
+        <li><strong>Business meaning</strong><span>Metrics, joins, policies</span></li>
+        <li><strong>Context assembly</strong><span>Retrieval + scoped memory</span></li>
+        <li class="chain-model"><strong>Agent + skills</strong><span>Explain or propose</span></li>
+        <li class="chain-control"><strong>Verify + review</strong><span>Rules, evidence, people</span></li>
+        <li><strong>Business outcome</strong><span>Authorized action + value</span></li>
+      </ol>
+      <p class="feedback-line">↶ Outcomes, corrections, and incidents feed evaluation. Approved changes update the sources, definitions, skills, and controls.</p>
+    </figure>
+    <nav class="guide-nav" aria-label="Foundation topics">
+      <a href="#data-foundations">Data foundations</a><a href="#database-semantics">Database semantics</a><a href="#retrieval-memory">Retrieval & memory</a><a href="#knowledge-products">Business knowledge</a><a href="#human-oversight">Human oversight</a><a href="#business-value">Business value</a><a href="#agent-extension">Agents & skills</a><a href="#agent-evaluation">Evaluation</a>
+    </nav>
+    <div class="guide-topics">
+      <details id="data-foundations" open><summary><span>01</span> Make data fit for the decision</summary><div class="guide-body">
+        <p>A model cannot reliably repair conflicting customer IDs, missing records, or an undefined revenue metric. Start with the business question and identify the authoritative sources needed to answer it.</p>
+        <div class="guide-columns"><div><h4>Establish the foundation</h4><ul><li>Assign a data owner and a steward who can resolve quality issues.</li><li>Define entities, stable identifiers, units, timestamps, and the grain: what one row represents.</li><li>Check completeness, uniqueness, valid relationships, freshness, and coverage for the target task.</li><li>Document lineage from source to transformations to the records supplied to the agent.</li><li>Enforce access and privacy rules in the data service; record versions and refresh schedules.</li></ul></div><aside class="case-note"><h4>Example: customer renewal</h4><p>Link CRM accounts, contracts, and invoices using an approved customer ID. Mark whether invoices are paid, overdue, or disputed. A stale contract or a duplicated account can change the recommendation.</p><p><strong>Failure behavior:</strong> If a required source fails its quality or freshness check, show the missing evidence and route the decision to the owner.</p></aside></div>
+        <p class="artifact-line"><strong>Make it reviewable:</strong> A source inventory, a data contract, ownership, quality checks, lineage, access rules, and an agreed freshness target. Better foundations improve reliability; they do not guarantee correct model output.</p>
+      </div></details>
+      <details id="database-semantics"><summary><span>02</span> Teach the meaning of database tables and metrics</summary><div class="guide-body">
+        <p>A schema tells an agent which columns exist. A semantic layer tells it what those columns mean for the business. Valid SQL can still answer the wrong question.</p>
+        <div class="guide-columns"><div><h4>Give database access a business contract</h4><ul><li>Describe tables, column meanings, primary and foreign keys, allowed join paths, and one-to-many relationships.</li><li>Define metrics, aggregation rules, exclusions, fiscal periods, time zones, currencies, and effective dates.</li><li>Map business phrases to approved measures: “sales” may mean booked orders, invoiced sales, or recognized revenue.</li><li>Prefer approved views or parameterized metric tools. If generating SQL, validate its structure, permissions, resource limits, and business semantics before execution.</li><li>Use a read-only execution identity with row and column access controls. A prompt instruction is not an access boundary.</li></ul></div><aside class="case-note"><h4>The join trap</h4><p>Order A totals $100 and has two items. Order B totals $200 and has two items. Summing order totals after joining to items gives $600. The correct order total is $300.</p><p>Choose the grain before aggregating. Do not use <code>SUM(DISTINCT total)</code> as a general fix: different orders can have the same total.</p></aside></div>
+        <div class="mini-flow" aria-label="Semantic database query flow"><span>Business question</span><b aria-hidden="true">→</b><span>Approved metric + time window</span><b aria-hidden="true">→</b><span>Validated query + permissions</span><b aria-hidden="true">→</b><span>Result + provenance</span></div>
+        <pre class="sql-example"><code>-- Fictional metric: paid order value in USD, by order date.
+-- Each row in orders represents one order; returns excluded from this metric.
+SELECT SUM(total_usd) AS paid_order_value_usd
+FROM orders
+WHERE status = 'paid'
+  AND ordered_at &gt;= :period_start
+  AND ordered_at &lt; :period_end;</code></pre>
+        <p class="artifact-line"><strong>Make it reviewable:</strong> A versioned glossary and metric catalog, approved joins and views, example questions with expected queries, and tests on both SQL results and business interpretation.</p>
+      </div></details>
+      <details id="retrieval-memory"><summary><span>03</span> Use short-term and long-term memory deliberately</summary><div class="guide-body">
+        <p>Model weights, conversation history, and an external memory store are different things. An agent only uses the relevant information actually supplied to its current run. Storing more text does not ensure useful recall.</p>
+        <div class="memory-grid"><article><h4>Short-term: this task</h4><p>Keep the current question, confirmed constraints, recent tool results, unresolved questions, and workflow state. Scope it to the session and user.</p><p>Summarize long conversations within a context budget, preserving source references and uncertainty. Never let a summary erase an approval requirement.</p></article><article><h4>Long-term: selected, reusable records</h4><p>Store approved preferences, verified facts, and reusable lessons only when there is a legitimate purpose. Include scope, provenance, owner, sensitivity, version, and expiry.</p><p>Control writes, correction, retention, and deletion. Do not automatically promote an agent’s guess or a raw conversation into trusted knowledge.</p></article></div>
+        <div class="mini-flow" aria-label="Memory retrieval flow"><span>Task + identity</span><b aria-hidden="true">→</b><span>Authorized sources + relevant memories</span><b aria-hidden="true">→</b><span>Rank, deduplicate, check freshness</span><b aria-hidden="true">→</b><span>Bounded context + citations</span></div>
+        <ul><li>Route structured questions to metric tools; retrieve prose from approved documents. Use keyword and vector search together when tests show they improve recall.</li><li>Filter by access, entity, business unit, effective date, and task scope before selecting context. Recheck permission changes when reading stored memories.</li><li>Rerank useful candidates, remove duplicates, and reserve context for evidence rather than filling the window with unrelated history.</li><li>Define conflict rules: the current authoritative policy or live system record should override an old memory. Flag unresolved conflicts.</li></ul>
+        <p class="artifact-line"><strong>Example:</strong> Remembering that a customer prefers email can help a service agent. Remembering last month’s balance should never replace a fresh billing query. Test retrieval and memory for stale facts, cross-user leakage, incorrect writes, and successful correction or deletion.</p>
+      </div></details>
+      <details id="knowledge-products"><summary><span>04</span> Govern business knowledge as a product</summary><div class="guide-body">
+        <p>Business knowledge includes definitions, operating procedures, decision rules, exceptions, and the reasons behind them. Source it from policy owners, approved procedures, governed metrics, and documented decisions. Capture expert knowledge through review before publishing it for agents.</p>
+        <div class="guide-columns"><div><h4>A knowledge product needs</h4><ul><li>A named owner, intended audience, permitted uses, and a way to request corrections.</li><li>Source provenance, approval status, version, effective dates, review dates, and a refresh commitment.</li><li>Definitions of authority and scope: which rule applies to which product, region, or customer group?</li><li>A conflict-resolution path, change review, deprecation, and notification when a rule changes.</li><li>Examples and evaluation cases that show both the rule and its exceptions.</li></ul></div><aside class="case-note"><h4>Example: refund guidance</h4><p>A finance policy owner approves the eligibility rule. Regional exceptions carry scope and dates. The agent retrieves the applicable version and cites it; a backend enforces the rule before action.</p><p>A revoked policy must be removed from retrieval caches and corrected or expired in related memories.</p></aside></div>
+        <p class="artifact-line"><strong>Control boundary:</strong> Retrieved documents are evidence, not instructions allowed to rewrite agent rules. Enforce mandatory policy in code where feasible. Audit changes to knowledge alongside changes to data products.</p>
+      </div></details>
+      <details id="human-oversight"><summary><span>05</span> Embed people in the workflow from the start</summary><div class="guide-body">
+        <p>Decide who can approve, correct, pause, and recover the process while designing it. “A human can look at it later” is not an operating model.</p>
+        <div class="mini-flow" aria-label="Human oversight checkpoints"><span>Human sets scope</span><b aria-hidden="true">→</b><span>Agent gathers evidence</span><b aria-hidden="true">→</b><span>Exceptions go to owner</span><b aria-hidden="true">→</b><span>Reviewer approves action</span><b aria-hidden="true">→</b><span>Backend rechecks + logs</span></div>
+        <ul><li><strong>At intake:</strong> Confirm intent, scope, and missing facts for consequential or ambiguous requests.</li><li><strong>During work:</strong> Escalate contradictory sources, missing evidence, policy exceptions, and failed tool calls using observable triggers. Do not rely only on the model’s self-reported confidence.</li><li><strong>Before execution:</strong> Show the exact action, parameters, evidence, uncertainty, and expected consequence to an authorized reviewer. Approval must bind to that proposal.</li><li><strong>After execution:</strong> Capture receipts and corrections; assign incident handling, a pause switch, and a manual fallback.</li></ul>
+        <p class="artifact-line"><strong>Make it workable:</strong> Name the reviewer, response-time target, queue capacity, and timeout behavior. If approval expires or no reviewer responds, hold or escalate; silence is not approval. Give reviewers authority and time to challenge the result, and measure whether reviews catch errors.</p>
+      </div></details>
+      <details id="business-value"><summary><span>06</span> Capture value with a measurable business case</summary><div class="guide-body">
+        <p>Start with a decision or process that needs improvement. Compare the current workflow, deterministic automation, and an AI solution. Select AI when the pilot supports better outcomes at acceptable cost and risk.</p>
+        <ol><li>Define the owner, eligible population, baseline, unit, measurement source, and time horizon.</li><li>Select an outcome: net handling time, rework, resolution quality, conversion, or a measured reduction in loss. Track quality alongside speed.</li><li>Run a pilot against a comparable baseline. Use a controlled comparison where feasible and record changes in case mix, staffing, and adoption.</li><li>Include integration, data preparation, model use, retrieval, review, monitoring, support, and change management costs.</li><li>Agree on scale, revise, or stop criteria before the pilot. Measure realized value after rollout.</li></ol>
+        <aside class="value-example"><h4>Fictional monthly service pilot</h4><p>1,000 eligible cases × 80% adoption × 4 minutes saved ÷ 60 = <strong>53.3 hours of capacity</strong>. Handling time falls from 12 to 8 minutes, including human review and rework.</p><p>At $30/hour, the capacity value is $1,600. If only 50% converts to measurable benefit, realized benefit is <strong>$800</strong>. With $700 in allocated monthly total costs, net benefit is <strong>$100</strong> and ROI is <strong>14.3%</strong>.</p><div class="equation">Net benefit = realized benefit − total cost<br>ROI = net benefit / total cost × 100%</div><p>Time freed is not automatically cash saved. Record how capacity is used; avoid counting the same benefit under both time saved and throughput. These figures are illustrative assumptions, not a forecast.</p></aside>
+        <p class="artifact-line"><strong>Make it reviewable:</strong> A value scorecard with baseline, pilot result, adoption, quality, realized benefit, full costs, owner, and the decision to scale or stop.</p>
+      </div></details>
+      <details id="agent-extension"><summary><span>07</span> Extend capabilities through clear agent and skill contracts</summary><div class="guide-body">
+        <p>Start with one orchestrator and a small set of well-defined capabilities. Add specialist agents when a bounded responsibility or independently testable workflow earns the added coordination cost.</p>
+        <div class="agent-map"><div class="orchestrator"><strong>Orchestrator</strong><span>Owns task state, routing, budgets, and escalation</span></div><div class="capability-row"><article><strong>Data specialist</strong><span>Approved metric tools</span></article><article><strong>Knowledge specialist</strong><span>Scoped document retrieval</span></article><article><strong>Review capability</strong><span>Checks evidence and proposals</span></article></div><p>Each returns structured results with source IDs, versions, status, and limitations. Policy and human approval still gate execution.</p></div>
+        <div class="guide-columns"><div><h4>Define each capability</h4><ul><li><strong>Tool:</strong> A callable operation with typed input, output, permissions, side effects, and error behavior.</li><li><strong>Skill:</strong> A reusable, versioned procedure that specifies when to apply it and which tools or knowledge it needs.</li><li><strong>Agent:</strong> A bounded role that uses a model and tools to pursue a delegated task. Define what it may decide and what it must return.</li></ul></div><aside class="case-note"><h4>Extend without losing control</h4><p>Register a capability by name, version, schema, owner, allowed tools, and evaluation suite. Pin versions and test before enabling it.</p><p>Limit delegation depth, time, cost, retries, and tool scope. Pass only needed context. Delegation never grants broader permissions.</p></aside></div>
+        <p class="artifact-line"><strong>Coordination rule:</strong> Keep an explicit shared task state, trace handoffs, validate returned results, and stop loops or duplicate actions. Two agents agreeing is not independent proof. Measure the added capability against a single-agent baseline.</p>
+      </div></details>
+      <details id="agent-evaluation"><summary><span>08</span> Evaluate the whole path from evidence to outcome</summary><div class="guide-body">
+        <p>Define correctness for the task before releasing an agent. Build a held-out set from approved, representative cases plus known failures and adversarial inputs. Domain experts provide expected results or a rubric; protect sensitive records and prevent test leakage.</p>
+        <div class="table-scroll"><table class="eval-table"><caption>Evaluate each layer, then test the complete workflow</caption><thead><tr><th scope="col">Layer</th><th scope="col">What to check</th><th scope="col">Example measure</th></tr></thead><tbody>
+          <tr><th scope="row">Data & semantics</th><td>Freshness, grain, correct definitions and joins</td><td>Metric results match approved reference queries</td></tr>
+          <tr><th scope="row">Retrieval & memory</th><td>Relevant, authorized, current evidence; isolated memory</td><td>Recall@k on labeled evidence; zero observed cross-user leakage in the test set</td></tr>
+          <tr><th scope="row">Answer</th><td>Correctness, source support, complete material claims</td><td>Expert-scored accuracy and citation support</td></tr>
+          <tr><th scope="row">Tools & actions</th><td>Correct arguments, approval, eligibility, duplicate prevention</td><td>Authorized task success; blocked prohibited-action cases</td></tr>
+          <tr><th scope="row">Failure handling</th><td>Missing data, conflicting policies, outages, injection</td><td>Appropriate abstention, escalation, and recovery</td></tr>
+          <tr><th scope="row">Business operation</th><td>Quality, latency, cost, adoption, reviewer workload</td><td>Realized benefit against the baseline</td></tr>
+        </tbody></table></div>
+        <p><strong>Interpret metrics carefully:</strong> Recall@k is the share of labeled relevant items found among the top k retrieved results. It does not measure answer correctness. An LLM judge can help triage, but calibrate its rubric against expert reviews and investigate disagreements.</p>
+        <ul><li>Report results by business unit, risk, language, and task type. Repeat runs where outputs vary and show sample size and uncertainty.</li><li>Set risk-specific acceptance thresholds before testing. Block release on designated critical failures; a good average cannot cancel them out.</li><li>Version the model, prompt, data, semantic definitions, index, memory policy, tools, and skills. Re-run affected evaluations after changes.</li><li>Use shadow mode or a limited pilot, monitor corrections and incidents, and define rollback triggers. Feed verified failures into regression cases.</li></ul>
+        <p class="artifact-line"><strong>The practical limit:</strong> Passing evaluations provides evidence for a defined scope; it cannot guarantee every future answer. Keep runtime validation, source checks, and human escalation in place.</p>
+      </div></details>
+    </div>
+    <aside class="principle"><span>START WITH A SMALL SLICE</span><p>Choose one business question, one approved source, one accountable owner, and a measurable result. Prove the checks before adding autonomy.</p></aside>
+    <p class="reading" id="foundation-reading">Further reading: <a href="https://docs.getdbt.com/docs/use-dbt-semantic-layer/sl-architecture">Semantic metrics architecture</a> · <a href="https://docs.langchain.com/oss/python/concepts/memory">Agent memory concepts</a> · <a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf">NIST Generative AI Profile</a> · <a href="https://www.anthropic.com/engineering/building-effective-agents">Agent design patterns</a> · <a href="https://aclanthology.org/2024.naacl-long.20/">ARES retrieval evaluation</a></p>
+  </section>
+
+  <section id="operating-model"><div class="section-heading"><h2>Run the business around the AI</h2><span>03 / CLOSE THE LOOP</span></div>
     <div class="operations">
       <article><span class="number">01</span><h3>Define the decision</h3><p>Name the process owner, the business outcome, and the actions AI may suggest. Record what it must never decide alone.</p><strong>Measure:</strong><p>Time saved, error rate, and business outcome against a baseline without AI.</p></article>
       <article><span class="number">02</span><h3>Prove it before release</h3><p>Test representative cases, missing evidence, malicious documents, and incorrect tool requests. Have domain experts judge outputs.</p><strong>Release gate:</strong><p>Agree on acceptance criteria before testing. Block release when a critical scenario fails.</p></article>
@@ -26,7 +112,7 @@
     <aside class="principle"><span>THE DESIGN RULE</span><p>The more consequential the action, the stronger the evidence, permissions, and human approval should be.</p></aside>
   </section>
   <section id="llm-foundations" aria-labelledby="foundations-title">
-    <div class="section-heading"><h2 id="foundations-title">The math behind LLMs & reasoning</h2><span>03 / UNDERSTAND THE ENGINE</span></div>
+    <div class="section-heading"><h2 id="foundations-title">The math behind LLMs & reasoning</h2><span>04 / UNDERSTAND THE ENGINE</span></div>
     <p class="foundation-intro">Start with the intuition, then open each topic for the math and a business example. These concepts describe common autoregressive Transformer models; implementation details vary.</p>
     <div class="engine-flow" aria-label="LLM generation pipeline"><span>Text → tokens</span><span>→ vectors + position</span><span>→ Transformer layers</span><span>→ next-token probabilities</span><span>→ choose a token & repeat</span></div>
     <div class="topic-grid">

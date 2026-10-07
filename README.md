@@ -30,3 +30,7 @@ No build step or package installation is required. Google Fonts is optional; sys
 ## LLM math and reasoning
 
 Nine expandable lessons cover conditional probability, embeddings, attention, Transformer layers, training loss, temperature, intermediate computation, independent verification, and reasoning training. Each includes readable math, an example, and a business implication, with links to foundational research.
+
+## Data and agent foundations
+
+The foundations guide connects eight topics: data quality and ownership, relational database semantics, scoped retrieval and memory, governed knowledge products, proactive human oversight, measurable business value, extensible skills and agents, and layered evaluations. It includes an example of join fan-out, a reviewed memory lifecycle, a fictional value calculation, and an evaluation matrix.
