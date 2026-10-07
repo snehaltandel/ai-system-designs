@@ -34,3 +34,9 @@ Nine expandable lessons cover conditional probability, embeddings, attention, Tr
 ## Data and agent foundations
 
 The foundations guide connects eight topics: data quality and ownership, relational database semantics, scoped retrieval and memory, governed knowledge products, proactive human oversight, measurable business value, extensible skills and agents, and layered evaluations. It includes an example of join fan-out, a reviewed memory lifecycle, a fictional value calculation, and an evaluation matrix.
+
+## Architecture drawing library
+
+Four professional vector drawings show governed document retrieval, semantic relational access, retrieval with memory, and extensible agents with human approval. The gallery supports enlarged viewing and SVG download. All drawings show service and store boundaries, directional interfaces, and explicit control points.
+
+SVG sources are in `site/diagrams/`. Edit the corresponding `scripts/draw-*.mjs` generator and run it with Node from the repository root to regenerate. No rendering dependency is needed for SVG generation.

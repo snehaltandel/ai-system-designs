@@ -5,20 +5,29 @@
   <title>AI System Designs — A business field guide</title>
   <meta name="description" content="Explore how business data connects to AI, where decisions happen, and which checks keep people in control.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=4">
-  <script src="app.js?v=4" defer></script>
+  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="architecture.css?v=5">
+  <script src="app.js?v=5" defer></script>
+  <script src="architecture.js?v=5" defer></script>
 </head>
 <body>
-<header><a class="brand" href="#">◎ <span>AI SYSTEM DESIGNS</span></a><nav aria-label="Sections"><a href="#trusted-ai">Data & agent foundations</a><a href="#operating-model">Operating model</a><a href="#llm-foundations">LLM math & reasoning ↗</a></nav></header>
+<header><a class="brand" href="#">◎ <span>AI SYSTEM DESIGNS</span></a><nav aria-label="Sections"><a href="#architecture-library">Architecture drawings</a><a href="#trusted-ai">Data & agent foundations</a><a href="#operating-model">Operating model</a><a href="#llm-foundations">LLM math & reasoning ↗</a></nav></header>
 <main>
-  <section class="intro"><p class="eyebrow">A FIELD GUIDE FOR BUSINESS LEADERS</p><h1>See the system.<br><span>Make a better decision.</span></h1><p>AI works inside a business process. Explore how sources become context, how answers become decisions, and where people stay in control.</p></section>
+  <section class="intro"><p class="eyebrow">A FIELD GUIDE FOR BUSINESS LEADERS</p><h1>AI architecture, <span>made clear.</span></h1><p>AI works inside a business process. Explore how sources become context, how answers become decisions, and where people stay in control.</p></section>
+  <section id="architecture-library" aria-labelledby="architecture-title" class="architecture-library">
+    <div class="section-heading"><h2 id="architecture-title">Architecture drawings & system designs</h2><span>01 / SYSTEM BLUEPRINTS</span></div>
+    <p class="library-intro">Explore four reference designs. Each drawing separates services, stores, interfaces, and control boundaries so you can see how the system is actually wired.</p>
+    <div id="blueprint-tabs" class="blueprint-tabs" aria-label="System designs"></div>
+    <article id="blueprint-panel"></article>
+  </section>
+  <dialog id="drawing-dialog" aria-labelledby="drawing-title"><div class="drawing-toolbar"><h2 id="drawing-title">Architecture drawing</h2><div class="dialog-controls"><label for="drawing-scale">View</label><select id="drawing-scale"><option value="fit">Fit drawing</option><option value="1">100%</option><option value="1.25">125%</option></select><button type="button" id="close-drawing" aria-label="Close enlarged drawing">Close ×</button></div></div><div class="expanded-canvas" tabindex="0" role="region" aria-label="Enlarged architecture drawing"><img id="expanded-drawing" alt="" width="1600" height="1000"></div></dialog>
   <section aria-labelledby="explore-title" class="explorer">
-    <div class="section-heading"><h2 id="explore-title">Explore an architecture</h2><span>01 / DESIGN THE FLOW</span></div>
+    <div class="section-heading"><h2 id="explore-title">Compare the use cases</h2><span>02 / COMPARE PATTERNS</span></div>
     <div id="patterns" class="patterns" aria-label="Architecture patterns"></div>
     <article id="design" aria-live="polite"></article>
   </section>
     <section id="trusted-ai" aria-labelledby="trusted-title" class="trusted-guide">
-    <div class="section-heading"><h2 id="trusted-title">Build the foundations for trustworthy AI</h2><span>02 / FROM DATA TO VALUE</span></div>
+    <div class="section-heading"><h2 id="trusted-title">Build the foundations for trustworthy AI</h2><span>03 / FROM DATA TO VALUE</span></div>
     <p class="foundation-intro">An agent works with the context and tools your system supplies. Give it reliable data, explicit business meaning, relevant memory, and a clear path to ask for help. Then measure whether the whole process improves the business.</p>
     <figure class="foundation-map">
       <figcaption><h3>One connected system, with checks throughout</h3><p>Follow the arrows. Controls sit before retrieval, during validation, and before an action—not only at the end.</p></figcaption>
@@ -103,7 +112,7 @@ WHERE status = 'paid'
     <p class="reading" id="foundation-reading">Further reading: <a href="https://docs.getdbt.com/docs/use-dbt-semantic-layer/sl-architecture">Semantic metrics architecture</a> · <a href="https://docs.langchain.com/oss/python/concepts/memory">Agent memory concepts</a> · <a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf">NIST Generative AI Profile</a> · <a href="https://www.anthropic.com/engineering/building-effective-agents">Agent design patterns</a> · <a href="https://aclanthology.org/2024.naacl-long.20/">ARES retrieval evaluation</a></p>
   </section>
 
-  <section id="operating-model"><div class="section-heading"><h2>Run the business around the AI</h2><span>03 / CLOSE THE LOOP</span></div>
+  <section id="operating-model"><div class="section-heading"><h2>Run the business around the AI</h2><span>04 / CLOSE THE LOOP</span></div>
     <div class="operations">
       <article><span class="number">01</span><h3>Define the decision</h3><p>Name the process owner, the business outcome, and the actions AI may suggest. Record what it must never decide alone.</p><strong>Measure:</strong><p>Time saved, error rate, and business outcome against a baseline without AI.</p></article>
       <article><span class="number">02</span><h3>Prove it before release</h3><p>Test representative cases, missing evidence, malicious documents, and incorrect tool requests. Have domain experts judge outputs.</p><strong>Release gate:</strong><p>Agree on acceptance criteria before testing. Block release when a critical scenario fails.</p></article>
@@ -112,7 +121,7 @@ WHERE status = 'paid'
     <aside class="principle"><span>THE DESIGN RULE</span><p>The more consequential the action, the stronger the evidence, permissions, and human approval should be.</p></aside>
   </section>
   <section id="llm-foundations" aria-labelledby="foundations-title">
-    <div class="section-heading"><h2 id="foundations-title">The math behind LLMs & reasoning</h2><span>04 / UNDERSTAND THE ENGINE</span></div>
+    <div class="section-heading"><h2 id="foundations-title">The math behind LLMs & reasoning</h2><span>05 / UNDERSTAND THE ENGINE</span></div>
     <p class="foundation-intro">Start with the intuition, then open each topic for the math and a business example. These concepts describe common autoregressive Transformer models; implementation details vary.</p>
     <div class="engine-flow" aria-label="LLM generation pipeline"><span>Text → tokens</span><span>→ vectors + position</span><span>→ Transformer layers</span><span>→ next-token probabilities</span><span>→ choose a token & repeat</span></div>
     <div class="topic-grid">
