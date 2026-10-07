@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI System Designs — A business field guide</title>
+  <meta name="description" content="Explore how business data connects to AI, where decisions happen, and which checks keep people in control.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+<header><a class="brand" href="#">◎ <span>AI SYSTEM DESIGNS</span></a><a href="#operating-model">Operating model ↗</a></header>
+<main>
+  <section class="intro"><p class="eyebrow">A FIELD GUIDE FOR BUSINESS LEADERS</p><h1>See the system.<br><span>Make a better decision.</span></h1><p>AI works inside a business process. Explore how sources become context, how answers become decisions, and where people stay in control.</p></section>
+  <section aria-labelledby="explore-title" class="explorer">
+    <div class="section-heading"><h2 id="explore-title">Explore an architecture</h2><span>01 / DESIGN THE FLOW</span></div>
+    <div id="patterns" class="patterns" aria-label="Architecture patterns"></div>
+    <article id="design" aria-live="polite"></article>
+  </section>
+  <section id="operating-model"><div class="section-heading"><h2>Run the business around the AI</h2><span>02 / CLOSE THE LOOP</span></div>
+    <div class="operations">
+      <article><span class="number">01</span><h3>Define the decision</h3><p>Name the process owner, the business outcome, and the actions AI may suggest. Record what it must never decide alone.</p><strong>Measure:</strong><p>Time saved, error rate, and business outcome against a baseline without AI.</p></article>
+      <article><span class="number">02</span><h3>Prove it before release</h3><p>Test representative cases, missing evidence, malicious documents, and incorrect tool requests. Have domain experts judge outputs.</p><strong>Release gate:</strong><p>Agree on acceptance criteria before testing. Block release when a critical scenario fails.</p></article>
+      <article><span class="number">03</span><h3>Observe and intervene</h3><p>Track evidence quality, rejected actions, cost, latency, and corrections. Assign someone to investigate failures.</p><strong>Control:</strong><p>Keep an audit trail, a pause switch, a manual fallback, and a schedule to reassess changes.</p></article>
+    </div>
+    <aside class="principle"><span>THE DESIGN RULE</span><p>The more consequential the action, the stronger the evidence, permissions, and human approval should be.</p></aside>
+  </section>
+</main>
+<footer><p>Educational walkthrough · All examples are fictional. No live business data or LLM calls.</p><a href="https://github.com/snehaltandel/ai-system-designs">Explore the source ↗</a></footer>
+</body></html>
