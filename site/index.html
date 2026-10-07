@@ -7,11 +7,13 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css?v=5">
   <link rel="stylesheet" href="architecture.css?v=5">
+  <link rel="stylesheet" href="simulator.css?v=1">
+  <script type="module" src="simulator.js?v=1"></script>
   <script src="app.js?v=5" defer></script>
   <script src="architecture.js?v=6" defer></script>
 </head>
 <body>
-<header><a class="brand" href="#">◎ <span>AI SYSTEM DESIGNS</span></a><nav aria-label="Sections"><a href="#architecture-library">Architecture drawings</a><a href="#trusted-ai">Data & agent foundations</a><a href="#operating-model">Operating model</a><a href="#llm-foundations">LLM math & reasoning ↗</a></nav></header>
+<header><a class="brand" href="#">◎ <span>AI SYSTEM DESIGNS</span></a><nav aria-label="Sections"><a href="#decision-simulator">Decision simulator</a><a href="#architecture-library">Architecture drawings</a><a href="#trusted-ai">Data & agent foundations</a><a href="#operating-model">Operating model</a><a href="#llm-foundations">LLM math & reasoning ↗</a></nav></header>
 <main>
   <section class="intro"><p class="eyebrow">A FIELD GUIDE FOR BUSINESS LEADERS</p><h1>AI architecture, <span>made clear.</span></h1><p>AI works inside a business process. Explore how sources become context, how answers become decisions, and where people stay in control.</p></section>
   <section id="architecture-library" aria-labelledby="architecture-title" class="architecture-library">
@@ -21,6 +23,24 @@
     <article id="blueprint-panel"></article>
   </section>
   <dialog id="drawing-dialog" aria-labelledby="drawing-title"><div class="drawing-toolbar"><h2 id="drawing-title">Architecture drawing</h2><div class="dialog-controls"><label for="drawing-scale">View</label><select id="drawing-scale"><option value="fit">Fit drawing</option><option value="1">100%</option><option value="1.25">125%</option></select><button type="button" id="close-drawing" aria-label="Close enlarged drawing">Close ×</button></div></div><div class="expanded-canvas" tabindex="0" role="region" aria-label="Enlarged architecture drawing"><img id="expanded-drawing" alt="" width="1600" height="1000"></div></dialog>
+  <section id="decision-simulator" class="decision-simulator" aria-labelledby="simulator-title">
+    <div class="section-heading"><h2 id="simulator-title">Follow a business decision</h2><span>INTERACTIVE / RENEWAL LAB</span></div>
+    <p class="foundation-intro">Should we offer this customer a renewal discount? Follow the evidence into a recommendation, then see which checks allow an action. Change the conditions to explore what breaks.</p>
+    <div class="sim-case"><div><p class="eyebrow">FICTIONAL CASE · NORTHSTAR MANUFACTURING</p><h3>A $120,000 annual renewal. A proposed 10% discount.</h3><p>The account manager wants to retain the customer. The agent may draft a proposal; only an authorized reviewer can approve it.</p></div><span class="sim-label">Guided simulation<br>No live AI or business actions</span></div>
+    <div class="sim-layout"><aside class="sim-controls"><fieldset><legend>What happens if…?</legend>
+      <label><input type="checkbox" name="stale"><span><strong>The CRM data is stale</strong><small>45 days old; the allowed age is 7 days.</small></span></label>
+      <label><input type="checkbox" name="conflict"><span><strong>Policies conflict</strong><small>Two current, approved rules disagree on the discount cap.</small></span></label>
+      <label><input type="checkbox" name="outage"><span><strong>Billing is unavailable</strong><small>The live invoice query fails.</small></span></label>
+      <label><input type="checkbox" name="unauthorized"><span><strong>The action is unauthorized</strong><small>The proposed write targets another business unit.</small></span></label>
+    </fieldset><button type="button" id="sim-reset">Reset example</button><p class="sim-help">Switches can be combined. Every change clears the previous review and returns to step 1.</p><a href="#architecture-library">Explore the full architecture drawings ↗</a></aside>
+    <div class="sim-workspace"><ol id="sim-steps" class="sim-steps" aria-label="Decision stages"></ol>
+      <div id="sim-map" class="sim-map" aria-label="Components involved in this decision"></div>
+      <div class="sim-map-legend">Active component · <span class="sim-ok">✓ Checked</span> · <span class="sim-warn">! Needs attention</span> · ○ Not reached</div>
+      <article id="sim-detail" class="sim-detail" aria-live="polite" aria-atomic="true"></article>
+      <div class="sim-navigation"><button type="button" id="sim-back">← Previous</button><span id="sim-progress"></span><button type="button" id="sim-next">Next step →</button></div>
+    </div></div>
+    <details class="sim-assumptions"><summary>Example rules, evidence, and evaluation criteria</summary><p>These are fictional teaching rules, not discount advice. All figures are USD. The renewal is $120,000 before discount. An approved policy permits at most 10% when undisputed overdue invoices total $0. A $2,000 disputed invoice is excluded from that eligibility metric and flagged for finance review; it is not treated as paid. All source versions and permission checks are bound to the proposal.</p><p>Evaluation criteria: stale or missing required data and unresolved policy conflicts must prevent a proposal; cross-unit writes must be denied; no action may be recorded without review; changing inputs must invalidate review. Approval records an internal discount proposal only—it does not renew the contract or send a customer offer.</p><p>The LLM interpretation below is a scripted illustration. Arithmetic, eligibility, and permissions are deterministic checks. Process timings are illustrative estimates; actual retention, revenue, cost, and reviewer workload require a measured pilot.</p></details>
+  </section>
   <section aria-labelledby="explore-title" class="explorer">
     <div class="section-heading"><h2 id="explore-title">Compare the use cases</h2><span>02 / COMPARE PATTERNS</span></div>
     <div id="patterns" class="patterns" aria-label="Architecture patterns"></div>

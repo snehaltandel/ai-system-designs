@@ -40,3 +40,14 @@ The foundations guide connects eight topics: data quality and ownership, relatio
 Four professional vector drawings show governed document retrieval, semantic relational access, retrieval with memory, and extensible agents with human approval. The gallery supports enlarged viewing and SVG download. All drawings show service and store boundaries, directional interfaces, and explicit control points.
 
 SVG sources are in `site/diagrams/`. Edit the corresponding `scripts/draw-*.mjs` generator and run it with Node from the repository root to regenerate. No rendering dependency is needed for SVG generation.
+
+## Interactive renewal decision simulator
+
+The **Follow a business decision** lab walks through scoped source retrieval, invoice semantics, short- and long-term context, independent validation, human review, and outcome measurement. Four combinable switches demonstrate stale CRM data, conflicting policies, a billing outage, and an unauthorized cross-unit write. Each change resets review. Approval records only a simulated proposal, never a renewal or customer offer.
+
+- `site/simulator.js`: stage rendering and interactions.
+- `site/simulator-engine.mjs`: fictional policy checks and outcomes.
+- `site/simulator.css`: responsive lab layout and highlighted component map.
+- `node --test tests/simulator.test.mjs`: acceptance checks across all 16 switch combinations.
+
+All policies, timings, sources, and recommendations are teaching examples. The simulator has no external API dependencies or live model calls.
