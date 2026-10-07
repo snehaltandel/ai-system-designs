@@ -26,3 +26,7 @@ GitHub Pages uses the included Actions workflow to publish only `site/` when `ma
 - `site/styles.css`: responsive layout and visual design.
 
 No build step or package installation is required. Google Fonts is optional; system sans-serif fonts provide a fallback.
+
+## LLM math and reasoning
+
+Nine expandable lessons cover conditional probability, embeddings, attention, Transformer layers, training loss, temperature, intermediate computation, independent verification, and reasoning training. Each includes readable math, an example, and a business implication, with links to foundational research.
