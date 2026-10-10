@@ -51,3 +51,27 @@ The **Follow a business decision** lab walks through scoped source retrieval, in
 - `node --test tests/simulator.test.mjs`: acceptance checks across all 16 switch combinations.
 
 All policies, timings, sources, and recommendations are teaching examples. The simulator has no external API dependencies or live model calls.
+
+## Documentation navigation
+
+The site now opens on a documentation home and shows one section overview or topic at a time. A nested, expandable sidebar groups the 29 existing topics into:
+
+1. **LLM basics & reasoning** — 9 lessons.
+2. **Business & data foundations** — 8 guides.
+3. **System designs** — 4 component architectures.
+4. **Use cases & walkthroughs** — 4 patterns and the renewal simulator.
+5. **Business operating model** — 3 practices.
+
+Breadcrumbs, a fixed documentation-home link, topic filtering, and previous/next links support navigation. The sidebar has its own scroll area and becomes a keyboard-accessible drawer on mobile. The top-left brand always returns to the documentation root. Existing section and foundation-topic anchors remain supported.
+
+Topic URLs use hash routes, for example `#/learn/attention` and `#/designs/rag`, so direct links work on GitHub Pages without server rewrites. The existing content and interactive components are retained. Topic filtering searches titles and section names, not article bodies.
+
+### Adding content in future iterations
+
+- `site/docs-catalog.mjs` is the content map: section, title, topic order, route, and content anchor. It drives the navigation, overview cards, breadcrumbs, and pagination.
+- `site/index.html` holds the lesson and operating-model content; add a unique content anchor for each new topic.
+- `site/docs.js` manages topic visibility, legacy links, filtering, and the mobile drawer.
+- `site/docs.css` styles the documentation shell.
+- Run `node --test tests/*.test.mjs` after navigation or simulator changes, and check new routes in desktop and mobile browsers.
+
+Keep new topic proposals in the content plan until scoped. Add them to the public sidebar when their content is ready rather than creating empty pages.

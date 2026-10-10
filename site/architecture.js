@@ -40,3 +40,5 @@ document.querySelector('#drawing-scale').addEventListener('change',event=>{
   image.style.maxHeight=event.target.value==='fit'?'calc(94vh - 130px)':'none';
 });
 renderBlueprint(0);
+
+window.AISystemDesigns = {...window.AISystemDesigns, selectBlueprint: renderBlueprint};
