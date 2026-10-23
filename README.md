@@ -43,12 +43,12 @@ SVG sources are in `site/diagrams/`. Edit the corresponding `scripts/draw-*.mjs`
 
 ## Interactive renewal decision simulator
 
-The **Follow a business decision** lab walks through scoped source retrieval, invoice semantics, short- and long-term context, independent validation, human review, and outcome measurement. Four combinable switches demonstrate stale CRM data, conflicting policies, a billing outage, and an unauthorized cross-unit write. Each change resets review. Approval records only a simulated proposal, never a renewal or customer offer.
+The renewal walkthrough uses four short steps: meet the customer, check the facts, see the AI suggestion, and make a decision. One prominent next button guides the default path. Technical explanations are optional. A collapsed experiment panel lets readers try one problem at a time: old customer data, unavailable invoices, conflicting policies, or missing permission. Each change clears the previous decision and returns to the facts check. Failed checks block progress and provide a plain-language reason plus a corrected example to continue. Approval records only a simulated proposal, never a renewal or customer offer.
 
 - `site/simulator.js`: stage rendering and interactions.
 - `site/simulator-engine.mjs`: fictional policy checks and outcomes.
-- `site/simulator.css`: responsive lab layout and highlighted component map.
-- `node --test tests/simulator.test.mjs`: acceptance checks across all 16 switch combinations.
+- `site/simulator.css`: focused step cards, progress indicators, and persistent next/back controls.
+- `node --test tests/simulator.test.mjs`: policy acceptance checks across all 16 underlying failure combinations (the beginner UI presents one situation at a time).
 
 All policies, timings, sources, and recommendations are teaching examples. The simulator has no external API dependencies or live model calls.
 
