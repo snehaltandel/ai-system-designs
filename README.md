@@ -75,3 +75,13 @@ Topic URLs use hash routes, for example `#/learn/attention` and `#/designs/rag`,
 - Run `node --test tests/*.test.mjs` after navigation or simulator changes, and check new routes in desktop and mobile browsers.
 
 Keep new topic proposals in the content plan until scoped. Add them to the public sidebar when their content is ready rather than creating empty pages.
+
+## Inclusive AI vision and visual theme
+
+The landing page connects an aspirational 10–20 year vision of accessible, human-guided AI to the existing learning path: understand the foundations, connect useful agentic systems, and keep people at the center. It explicitly labels the futuristic scene as concept artwork, not a forecast.
+
+- `site/assets/ai-for-everyone-vision-*.webp`: original AI-generated artwork, responsively encoded without changing its composition. The large version is about 392 KB and the smaller version about 136 KB.
+- `docs/VISION-ART.md`: generation method, complete final prompt, and asset provenance.
+- `site/vision-theme.css`: midnight-blue navigation and landing page, cyan/violet accents, and light reading surfaces for documentation.
+
+The artwork is a semantic image with descriptive alternative text, native responsive source selection, explicit dimensions, and a high fetch priority on the home view. Text and navigation remain HTML. No animation or extra runtime dependency was added.

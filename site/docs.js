@@ -33,7 +33,10 @@ function cards(section) {
 }
 function buildNavigation(){
   tree.innerHTML=sections.map(section=>`<details data-section="${section.id}"><summary>${section.title}<span>${section.topics.length}</span></summary><ul><li>${link({path:`/${section.id}`,title:'Section overview'})}</li>${pages.filter(item=>item.section.id===section.id&&!item.overview).map(item=>`<li>${link(item)}</li>`).join('')}</ul></details>`).join('');
-  home.innerHTML=`<div class="docs-welcome"><p class="eyebrow">DOCUMENTATION HOME</p><h1>AI system design,<br>from concept to business.</h1><p>Understand how LLMs work, connect them to reliable business sources, and put checks around decisions and actions.</p><div class="docs-start"><a href="#/learn/tokens-probability">Start with LLM basics →</a><a href="#/designs">Explore system designs →</a></div></div><h2>Explore the documentation</h2><div class="docs-home-cards">${sections.map((section,i)=>`<a href="#/${section.id}"><span>0${i+1} / ${section.topics.length} TOPICS</span><h3>${section.title}</h3><p>${section.description}</p><b aria-hidden="true">Explore section →</b></a>`).join('')}</div><aside class="docs-reading-path"><h2>A suggested reading path</h2><p>Begin with LLM basics, establish the business and data foundations, then choose a system design. Try the renewal simulator and use the operating model to plan a controlled pilot.</p></aside>`;
+  home.innerHTML=`<div class="docs-welcome"><p class="eyebrow"><span class="vision-signal" aria-hidden="true"></span> OPEN KNOWLEDGE · HUMAN POSSIBILITY</p><h1>AI for everyone.<br><span>Possibility for every day.</span></h1><p>We make important AI concepts accessible, so more people can learn, build, and use AI in meaningful ways.</p><div class="docs-start"><a href="#/learn/tokens-probability">Start learning →</a><a href="#/practice/renewal">Try a practical walkthrough ↗</a></div></div>
+    <figure class="vision-art"><img data-vision-src="assets/ai-for-everyone-vision-1672.webp" data-vision-srcset="assets/ai-for-everyone-vision-840.webp 840w, assets/ai-for-everyone-vision-1672.webp 1672w" sizes="(max-width: 600px) calc(100vw - 36px), (max-width: 900px) calc(100vw - 48px), (max-width: 1150px) calc(100vw - 316px), min(100vw - 368px, 1232px)" width="1672" height="941" fetchpriority="high" decoding="async" alt="An imagined future learning commons: people of different ages and abilities collaborate on community projects, with luminous AI connections linking learning, creative work, and a welcoming neighborhood."><figcaption><span>OUR VISION · 10–20 YEARS AHEAD</span><p>AI that expands human possibility: accessible learning, useful assistance, and people guiding the decisions. AI-generated concept artwork; a vision, not a forecast.</p></figcaption></figure>
+    <section class="vision-direction" aria-labelledby="vision-direction-title"><div class="vision-section-heading"><p class="eyebrow">THE DIRECTION WE’RE EXPLORING</p><h2 id="vision-direction-title">From answers to meaningful help.</h2><p>The opportunity is to connect AI to knowledge, tools, and human goals. This guide breaks that journey into understandable steps.</p></div><ol class="vision-stages"><li><span>01 / UNDERSTAND</span><h3>Make the concepts clear.</h3><p>Learn what LLMs do, how reasoning works, and where their limits matter.</p><a href="#/learn">Explore the foundations →</a></li><li><span>02 / CONNECT</span><h3>Build useful agentic systems.</h3><p>Connect reliable knowledge, memory, and tools, with checks and human approval.</p><a href="#/designs/agents">See the agent architecture →</a></li><li><span>03 / EMPOWER</span><h3>Keep people at the center.</h3><p>Our longer-term vision: assistance that more people can access, understand, and guide in everyday life.</p><a href="#/foundations/human-oversight">Understand human oversight →</a></li></ol></section>
+    <div class="vision-section-heading"><p class="eyebrow">YOUR PATH FROM CONCEPT TO PRACTICE</p><h2>Explore the documentation</h2><p>Start where you are. Each section connects the big picture to practical decisions.</p></div><div class="docs-home-cards">${sections.map((section,i)=>`<a href="#/${section.id}"><span>0${i+1} / ${section.topics.length} TOPICS</span><h3>${section.title}</h3><p>${section.description}</p><b aria-hidden="true">Explore section →</b></a>`).join('')}</div><aside class="docs-reading-path"><h2>A big vision. Practical next steps.</h2><p>Begin with LLM basics, prepare reliable data and knowledge, and explore a system design. Try the renewal simulator to see how evidence, permissions, and human review work together. Learn through examples before applying AI to a real task.</p><a href="#/practice/renewal">Follow a business decision →</a></aside>`;
   for(const section of sections){
     const overview=document.createElement('div');overview.className='docs-section-overview';overview.dataset.overview=section.id;
     overview.innerHTML=`<p class="docs-section-intro">${section.description}</p><h2>Topics in this section</h2>${cards(section)}`;
@@ -68,6 +71,7 @@ function filterNavigation(){
 function route(focus=false){
   const old=page;
   page=resolvePage(location.hash);
+  document.body.classList.toggle('docs-home-view',Boolean(page?.home));
   if(search.value){search.value='';filterNavigation();}
   topicDetails.forEach(item=>{item.hidden=true;item.open=false;});
   topSections.forEach(section=>{section.hidden=true;section.classList.remove('docs-topic-view','docs-overview-view');});
@@ -79,6 +83,11 @@ function route(focus=false){
     document.title='Page not found — AI System Designs';
   }else if(page.home){
     home.hidden=false;heading.hidden=true;
+    const visionImage=home.querySelector('[data-vision-src]');
+    if(!visionImage.getAttribute('src')){
+      visionImage.srcset=visionImage.dataset.visionSrcset;
+      visionImage.src=visionImage.dataset.visionSrc;
+    }
     breadcrumbs.innerHTML='<ol><li aria-current="page">Documentation home</li></ol>';
     document.title='AI System Designs — Documentation home';
   }else{
