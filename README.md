@@ -29,7 +29,7 @@ No build step or package installation is required. Google Fonts is optional; sys
 
 ## LLM math and reasoning
 
-Nine expandable lessons cover conditional probability, embeddings, attention, Transformer layers, training loss, temperature, intermediate computation, independent verification, and reasoning training. Each includes readable math, an example, and a business implication, with links to foundational research.
+Nine expandable lessons cover conditional probability, embeddings, attention, Transformer layers, training loss, temperature, intermediate computation, independent verification, and reasoning training. Each includes readable math, an example, and a business implication, with links to foundational research. Every lesson also has a self-contained symbols-and-notation reference covering its variables, operators, Greek letters, subscripts, and powers. Formula descriptions are available to assistive technology, and explanations follow the equations without a redundant “Read it” label.
 
 ## Data and agent foundations
 
