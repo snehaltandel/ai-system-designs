@@ -24,6 +24,14 @@ test('legacy section links, default routes and malformed links are handled',()=>
   assert.equal(resolvePage('#/learn/')?.path,'/learn');
   assert.equal(resolvePage('#/not-a-topic'),null);assert.equal(resolvePage('#%'),null);
 });
+test('the Connect shortcut reveals its homepage section',()=>{
+  for(const hash of ['#/connect','#/connect/']){
+    const contact=resolvePage(hash);
+    assert.equal(contact.home,true);
+    assert.equal(contact.target,'connect-title');
+    assert.deepEqual(adjacentPages(contact),{});
+  }
+});
 test('previous and next navigation stay within each section',()=>{
   for(const section of sections){
     const siblings=pages.filter(page=>page.section.id===section.id);

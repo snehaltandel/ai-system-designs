@@ -26,6 +26,7 @@ export function resolvePage(hash) {
   let fragment;
   try { fragment=decodeURIComponent(hash.replace(/^#/,'')); } catch { return null; }
   if(!fragment || fragment==='/') return {path:'/',title:'Documentation home',home:true};
+  if(fragment.replace(/\/$/,'')==='/connect') return {path:'/connect',title:'Connect',home:true,target:'connect-title'};
   const path=aliases.get(fragment) || fragment.replace(/\/$/,'');
   return pages.find(page=>page.path===path) || null;
 }
